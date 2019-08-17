@@ -1,0 +1,25 @@
+{
+  "name": "kw-solvcamp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emildazhg/Solv-Camp.git"
+  },
+  "author": "Emilda Zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emildazhg/Solv-Camp/issues"
+  },
+  "homepage": "https://github.com/emildazhg/Solv-Camp#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}

@@ -1,0 +1,38 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book-form {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.card {
+  text-align: center;
+}
+
+.jumbotron {
+  border-radius: 0;
+}
+
+.title-primary {
+  margin: 2rem 0;
+}
+
+.right {
+  float: right;
+}

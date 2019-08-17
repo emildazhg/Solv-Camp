@@ -1,0 +1,24 @@
+<% include partials/header %>
+  <div class="jumbotron">
+    <h1 class="display-4">Hello, There!</h1>
+    <p class="lead">Welcome to bookworm word!</p>
+    <hr class="my-4">
+    <p> Online book review platform. Guides you to the best new and current books, includes reviews, comments, reading lists, find a book tool, and many more..</p>
+    <a class="btn btn-primary btn-lg" href="/books/new" role="button">Add Review</a>
+  </div>
+
+  <h3 class="title-primary">Our Top Review</h3>
+  
+  <div class="row">
+    <% datas.forEach(data =>{ %>
+      <div class="col-md-3 col-sm-3">
+        <div class="card">
+          <img class="card-img-top" src="<%= data.image %>">
+          <div class="card-body">
+            <h5 class="card-text"><%= data.name %></h5>
+          </div>
+        </div>
+      </div>
+    <% }) %>  
+  </div>
+<% include partials/footer %>
