@@ -8,7 +8,6 @@
 
 body {
   box-sizing: border-box;
-  margin: 1rem;
 }
 
 .row {
@@ -25,6 +24,11 @@ body {
   text-align: center;
 }
 
+.card img {
+  height: 10rem;
+  width: auto;
+}
+
 .jumbotron {
   border-radius: 0;
 }
@@ -35,4 +39,24 @@ body {
 
 .right {
   float: right;
+}
+
+.image_show {
+  height: 30rem;
+  margin: 1rem;
+}
+.media {
+  margin: 1rem;
+}
+
+.media-body {
+  margin: 1rem;
+}
+
+.media-header {
+  margin-bottom: 2rem;
+}
+
+.yellow {
+  color: goldenrod;
 }

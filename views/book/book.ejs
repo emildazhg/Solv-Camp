@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+  <div class="media">
+    <img  src="<%= data.image %>"  class="image_show" alt="book-image">
+    <div class="media-body">
+      <h5 class="media-header">Title : <%= data.title %></h5>
+      <h5>Description</h5>
+      <p><%= data.description %></p>
+
+      <h5>Reviews <span class="badge badge-info"><%=data.reviews.length%></span></h5>
+      <ul class="list-group list-group-flush">
+        <% data.reviews.forEach(review =>{ %>
+          <li class="list-group-item">"<%= review.review %>"- <i><%= review.author %></i>
+            <% for (var i=0; i<review.rating; i++){%>
+              <i class="fa fa-star yellow right"></i>
+            <%}%>
+          </li>
+        <% }) %> 
+        <a href="/books/<%=data._id%>/review/new" class="btn btn-light">Add New Review</a>
+      </ul>
+    </div>
+  </div>
+  <a href="/books" class="btn btn-primary m-5 right">Go Back</a>
+<% include ../partials/footer %>
