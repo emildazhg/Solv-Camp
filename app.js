@@ -1,54 +1,73 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
+const express = require("express"),
+  app = express(),
+  bodyParser = require("body-parser"),
+  mongoose = require("mongoose"),
+  Book = require("./models/book"),
+  Review = require("./models/review"),
+  seedDB = require("./seeds");
+
+seedDB();
+
+mongoose.connect("mongodb://localhost/solv_book", {
+  useNewUrlParser: true
+});
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-console.log(__dirname);
+
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.render("main");
+  res.redirect("/books");
 });
 
 app.get("/books", (req, res) => {
-  const books = [
-    {
-      name: "emilda",
-      image:
-        "https://1zl13gzmcsu3l9yq032yyf51-wpengine.netdna-ssl.com/wp-content/uploads/2017/06/Mahatma-Gandhi-quote-In-a-gentle-way-you-can-shake-the-world-1068x561.jpg"
-    },
-    {
-      name: "indah",
-      image:
-        "https://fastertomaster.com/wp-content/uploads/2018/07/growth-mindset-quotes-audrey-hepburn.jpg"
-    },
-    {
-      name: "wuhuuu",
-      image:
-        "https://www.goalcast.com/wp-content/uploads/2018/07/02_Charles_Bukowski_Quotes_Things_get_bad-1280x720.jpg"
-    },
-    {
-      name: "wuhuuu",
-      image:
-        "https://www.goalcast.com/wp-content/uploads/2018/07/02_Charles_Bukowski_Quotes_Things_get_bad-1280x720.jpg"
-    },
-    {
-      name: "wuhuuu",
-      image:
-        "https://www.goalcast.com/wp-content/uploads/2018/07/02_Charles_Bukowski_Quotes_Things_get_bad-1280x720.jpg"
-    }
-  ];
-
-  res.render("books", { datas: books });
+  Book.find({}, (err, data) => {
+    err ? console.log(err) : res.render("book/index", { data: data });
+  });
 });
 
 app.post("/books", (req, res) => {
-  res.send("this is working");
+  Book.create(req.body.book, err => {
+    err ? console.log(err) : res.redirect("/books");
+  });
 });
 
 app.get("/books/new", (req, res) => {
-  res.render("bookForm.ejs");
+  res.render("book/addBook");
+});
+
+app.get("/books/:id", (req, res) => {
+  Book.findById(req.params.id)
+    .populate("reviews")
+    .exec((err, data) => {
+      err ? console.log(err) : res.render("book/book", { data: data });
+    });
+});
+
+app.get("/books/:id/review/new", (req, res) => {
+  Book.findById(req.params.id, (err, data) => {
+    err ? console.log(err) : res.render("review/addReview", { data: data });
+  });
+});
+
+app.post("/books/:id/review", (req, res) => {
+  Book.findById(req.params.id, (err, book) => {
+    if (err) {
+      console.log(err);
+      redirect("/books");
+    } else {
+      Review.create(req.body.review, (err, review) => {
+        if (err) {
+          console.log(err);
+        } else {
+          book.reviews.push(review);
+          book.save();
+          res.redirect("/books/" + book._id);
+        }
+      });
+    }
+  });
 });
 
 app.listen(3000, () => console.log("Books Review App running in port 3000"));
