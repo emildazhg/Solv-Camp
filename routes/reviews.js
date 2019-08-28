@@ -26,6 +26,10 @@ router.post("/", isLoggedIn, (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          review.author.id = req.user._id;
+          review.author.username = req.user.username;
+          review.save();
+
           book.reviews.push(review);
           book.save();
           res.redirect("/books/" + book._id);

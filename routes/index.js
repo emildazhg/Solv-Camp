@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       console.log(err);
-      return res.render("user/register");
+      res.render("user/register");
     } else {
       passport.authenticate("local")(req, res, () => {
         res.redirect("/books");

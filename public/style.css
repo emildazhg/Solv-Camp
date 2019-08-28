@@ -63,7 +63,11 @@ body {
 }
 
 .media-header {
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
+}
+
+.section {
+  margin: 2rem 0;
 }
 
 .yellow {

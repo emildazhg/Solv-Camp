@@ -11,7 +11,7 @@ const booksRoutes = require("./routes/books"),
   reviewsRoutes = require("./routes/reviews"),
   indexRoutes = require("./routes/index");
 
-seedDB();
+// seedDB();
 
 mongoose.connect("mongodb://localhost/solv_book", {
   useNewUrlParser: true,
@@ -23,7 +23,6 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//passport
 app.use(
   require("express-session")({
     secret: "This is just some fun exercise",

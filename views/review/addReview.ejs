@@ -3,12 +3,6 @@
     <h1 class="title-primary">Add New Review</h1>
     <form action="/books/<%=data._id%>/review" method="POST">
       <div class="form-group row">
-        <label for="authorName" class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-          <input required type="text" name="review[author]" class="form-control" id="authorName" placeholder="Input your name">
-        </div>
-      </div>
-      <div class="form-group row">
         <label for="bookReview" class="col-sm-2 col-form-label">Review</label>
         <div class="col-sm-10">
           <textarea required rows="3" name="review[review]" class="form-control" id="bookReview"></textarea>

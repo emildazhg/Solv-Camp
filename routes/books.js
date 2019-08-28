@@ -17,9 +17,17 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", isLoggedIn, (req, res) => {
-  Book.create(req.body.book, err => {
-    err ? console.log(err) : res.redirect("/books");
+router.post("/", (req, res) => {
+  Book.create(req.body.book, (err, book) => {
+    if (err) {
+      console.log(err);
+    } else {
+      book.author.id = req.user._id;
+      book.author.username = req.user.username;
+      book.save();
+
+      res.redirect("/books");
+    }
   });
 });
 
