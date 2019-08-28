@@ -15,7 +15,7 @@ body {
   flex-wrap: wrap;
 }
 
-.book-form {
+.form {
   margin: 0 auto;
   width: 50%;
 }
@@ -39,6 +39,15 @@ body {
 
 .right {
   float: right;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+}
+
+.center p {
+  text-align: center;
 }
 
 .image_show {

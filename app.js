@@ -2,38 +2,109 @@ const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
+  seedDB = require("./seeds"),
+  passport = require("passport"),
+  localStrategry = require("passport-local").Strategy,
   Book = require("./models/book"),
   Review = require("./models/review"),
-  seedDB = require("./seeds");
+  User = require("./models/user");
 
 seedDB();
 
 mongoose.connect("mongodb://localhost/solv_book", {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useCreateIndex: true
 });
+
+app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set("view engine", "ejs");
+//passport
+app.use(
+  require("express-session")({
+    secret: "This is just some fun exercise",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
+passport.use(new localStrategry(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//User
+app.get("/register", (req, res) => {
+  res.render("user/register");
+});
+
+app.post("/register", (req, res) => {
+  const newUser = new User({
+    username: req.body.username
+  });
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.render("user/register");
+    } else {
+      passport.authenticate("local")(req, res, () => {
+        res.redirect("/books");
+      });
+    }
+  });
+});
+
+app.get("/login", (req, res) => {
+  res.render("user/login");
+});
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/books",
+    failureRedirect: "/login"
+  })
+);
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/books");
+});
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+};
+
+//books
 app.get("/", (req, res) => {
   res.redirect("/books");
 });
 
 app.get("/books", (req, res) => {
   Book.find({}, (err, data) => {
-    err ? console.log(err) : res.render("book/index", { data: data });
+    err
+      ? console.log(err)
+      : res.render("book/index", { data: data, user: req.user });
   });
 });
 
-app.post("/books", (req, res) => {
+app.post("/books", isLoggedIn, (req, res) => {
   Book.create(req.body.book, err => {
     err ? console.log(err) : res.redirect("/books");
   });
 });
 
-app.get("/books/new", (req, res) => {
+app.get("/books/new", isLoggedIn, (req, res) => {
   res.render("book/addBook");
 });
 
@@ -45,13 +116,13 @@ app.get("/books/:id", (req, res) => {
     });
 });
 
-app.get("/books/:id/review/new", (req, res) => {
+app.get("/books/:id/review/new", isLoggedIn, (req, res) => {
   Book.findById(req.params.id, (err, data) => {
     err ? console.log(err) : res.render("review/addReview", { data: data });
   });
 });
 
-app.post("/books/:id/review", (req, res) => {
+app.post("/books/:id/review", isLoggedIn, (req, res) => {
   Book.findById(req.params.id, (err, book) => {
     if (err) {
       console.log(err);
