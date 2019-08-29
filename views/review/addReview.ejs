@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-  <div class="book-form">
+  <div class="form">
     <h1 class="title-primary">Add New Review</h1>
     <form action="/books/<%=data._id%>/review" method="POST">
       <div class="form-group row">
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="form-group right">
-        <a href="/books/:id" class="btn btn-outline-secondary">Cancel</a>
+        <a href="/books/<%=data._id%>" class="btn btn-outline-secondary">Cancel</a>
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>  

@@ -32,7 +32,7 @@ router.post("/", isLoggedIn, (req, res) => {
 
           book.reviews.push(review);
           book.save();
-          res.redirect("/books/" + book._id);
+          res.redirect(`/books/${book._id}`);
         }
       });
     }

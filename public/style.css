@@ -63,7 +63,12 @@ body {
 }
 
 .media-header {
-  /* margin-bottom: 2rem; */
+  display: flex;
+  justify-content: space-between
+}
+
+.media-header-button{
+  display: flex;
 }
 
 .section {

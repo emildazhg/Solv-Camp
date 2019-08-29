@@ -2,8 +2,20 @@
   <div class="media">
     <img  src="<%= data.image %>"  class="image_show" alt="book-image">
     <div class="media-body">
-      <h5 class="media-header">Title : <%= data.title %></h5>
-      <em>Submitted by <strong><%= data.author.username%></strong></em>
+    <div class="media-header">
+      <div>
+        <h5>Title : <%= data.title %></h5>
+        <em>Submitted by <strong><%= data.author.username%></strong></em>
+      </div>
+      <%if(user && data.author.id.equals(user._id)){%>
+        <div class="media-header-button">
+          <form action="/books/<%=data._id%>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-outline-danger m-2">Delete</button>
+          </form>
+          <a href="/books/<%=data._id%>/edit" class="btn btn-warning m-2">Update</a>
+        </div>
+      <% } %>
+    </div>
       <div class="section">
         <h5>Description</h5>
         <p><%= data.description %></p>
@@ -21,5 +33,5 @@
       </ul>
     </div>
   </div>
-  <a href="/books" class="btn btn-primary m-5 right">Go Back</a>
+  <a href="/books" class="btn btn-outline-primary m-5 right">Go Back</a>
 <% include ../partials/footer %>

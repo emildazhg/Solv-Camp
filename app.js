@@ -2,6 +2,7 @@ const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
+  methodOverride = require("method-override"),
   seedDB = require("./seeds"),
   passport = require("passport"),
   localStrategry = require("passport-local").Strategy,
@@ -15,14 +16,15 @@ const booksRoutes = require("./routes/books"),
 
 mongoose.connect("mongodb://localhost/solv_book", {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(methodOverride("_method"));
 app.use(
   require("express-session")({
     secret: "This is just some fun exercise",
