@@ -78,3 +78,12 @@ body {
 .yellow {
   color: goldenrod;
 }
+
+.review-update-delete{
+  display: flex;
+  justify-content: flex-end
+}
+
+#horizontal-space{
+  margin-right: 0.5rem;
+}

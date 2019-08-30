@@ -23,10 +23,20 @@
       <h5>Reviews <span class="badge badge-info"><%=data.reviews.length%></span></h5>
       <ul class="list-group list-group-flush">
         <% data.reviews.forEach(review =>{ %>
-          <li class="list-group-item">"<%= review.review %>"- <i><%= review.author.username %></i>
+          <li class="list-group-item">
+            "<%= review.review %>"- <i><%= review.author.username %>
+          </i>
             <% for (var i=0; i<review.rating; i++){%>
               <i class="fa fa-star yellow right"></i>
             <%}%>
+            <%if(user && review.author.id.equals(user._id)){%>
+              <div class="review-update-delete">    
+                <a href="/books/<%=data._id%>/review/<%=review._id%>/edit" id="horizontal-space" class="btn btn-sm btn-warning">Edit</a>
+                <form action="/books/<%=data._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+            <% } %>
           </li>
         <% }) %> 
         <a href="/books/<%=data._id%>/review/new" class="btn btn-light">Add New Review</a>
