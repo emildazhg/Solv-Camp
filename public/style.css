@@ -87,3 +87,13 @@ body {
 #horizontal-space{
   margin-right: 0.5rem;
 }
+
+.toast,
+.toast.show {
+  display: block;
+  position: absolute;
+  width: 30rem;
+  right: 0;
+  opacity: 1;
+  margin: 1rem;
+}

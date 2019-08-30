@@ -17,8 +17,8 @@ router.post("/register", (req, res) => {
   });
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
-      console.log(err);
-      res.render("user/register");
+      req.flash("error", "User exist in out database!");
+      res.redirect("back");
     } else {
       passport.authenticate("local")(req, res, () => {
         res.redirect("/books");
@@ -41,14 +41,9 @@ router.post(
 
 router.get("/logout", (req, res) => {
   req.logout();
+  req.flash("success", "You logout!");
   res.redirect("/books");
 });
 
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-};
 
 module.exports = router;
