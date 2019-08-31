@@ -64,10 +64,10 @@ body {
 
 .media-header {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
-.media-header-button{
+.media-header-button {
   display: flex;
 }
 
@@ -79,12 +79,12 @@ body {
   color: goldenrod;
 }
 
-.review-update-delete{
+.review-update-delete {
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 
-#horizontal-space{
+#horizontal-space {
   margin-right: 0.5rem;
 }
 
